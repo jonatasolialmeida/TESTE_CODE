@@ -2,6 +2,8 @@
 
 ## Descrição do Projeto
 Este é um projeto de backend para uma plataforma de rede social, desenvolvido com Django Rest Framework, utilizando Docker para containerização e PostgreSQL como banco de dados.
+Além das funcionalidades solicitadas, implementei algumas melhorias que, na minha visão, podem agregar valor ao sistema e proporcionar uma experiência mais completa.
+Caso tenha ficado alguma dúvida posso explicar melhor em uma reunião.
 
 ## Tecnologias Utilizadas
 - Python 3.12.7
@@ -20,8 +22,7 @@ Este é um projeto de backend para uma plataforma de rede social, desenvolvido c
 
 ### Clonar o Repositório
 ```bash
-git clone https://github.com/seu-usuario/codeleap-network.git
-cd codeleap-network
+git clone https://github.com/jonatasolialmeida/TESTE_CODE.git
 ```
 
 ### Configuração do Ambiente
@@ -43,6 +44,17 @@ POSTGRES_DB=TESTECODELEAP
 
 ALLOWED_HOSTS=localhost,127.0.0.1
 CORS_ALLOWED_ORIGINS=http://localhost:80,http://localhost,http://127.0.0.1
+```
+### Criar Ambiente Virtual (Recomendo criar para instalar as dependências do projeto após ativar a venv)
+
+```bash
+# Na pasta backend
+python3 -m venv venv
+source venv/bin/activate  # No Linux/Mac
+venv\Scripts\activate     # No Windows
+
+# Instalar dependências
+pip install -r requirements.txt
 ```
 
 ### Instalação e Inicialização
@@ -94,18 +106,6 @@ Na interface de administração:
 2. Clique em "ADD TOKEN +"
 3. Selecione o usuário
 4. Salve para gerar o token
-
-### Criar Ambiente Virtual (Opcional, para desenvolvimento local)
-
-```bash
-# Na pasta backend
-python3 -m venv venv
-source venv/bin/activate  # No Linux/Mac
-venv\Scripts\activate     # No Windows
-
-# Instalar dependências
-pip install -r requirements.txt
-```
 
 ## Endpoints da API
 
@@ -207,5 +207,8 @@ docker-compose exec backend python manage.py test
 5. Abra um Pull Request
 
 ## Contato
+```
+Caso tenha dúvidas de como rodar o projeto, não hesite em me contactar
 Jonatas Almeida - jonatas.olialmeida@gmail.com
+https://www.linkedin.com/in/jônatas-almeida-24933a26/
 ```

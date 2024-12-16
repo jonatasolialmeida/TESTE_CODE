@@ -1,4 +1,4 @@
-# CodeLeap Network - Backend Social Media Platform
+# Backend Social Media Platform
 
 ## Descrição do Projeto
 Este é um projeto de backend para uma plataforma de rede social, desenvolvido com Django Rest Framework, utilizando Docker para containerização e PostgreSQL como banco de dados.

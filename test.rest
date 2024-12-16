@@ -1,0 +1,26 @@
+@baseUrl = http://127.0.0.1:8000/api
+@tokenJohn = Token 67ac43d4f67589b659da387db848ffa6e554601a
+@tokenNana = Token 131d4e6a80876c029387bd611dab098721a40266
+@tokenBeto = Token 4a05e93a2a05af486ead148c1671a714e242e02e
+
+### CREATE SOCIAL_POST
+
+POST {{baseUrl}}/social-posts/
+Authorization: {{tokenJohn}}
+Content-Type: application/json
+
+{
+    "title": "Meu Primeiro Post",
+    "content": "Este é o conteúdo do post."
+}
+
+### EDIT SOCIAL_POST
+
+PATCH {{baseUrl}}/social-posts/1/
+Authorization: {{tokenJohn}}
+Content-Type: application/json
+
+{
+    "title": "Título Atualizado",
+    "content": "Conteúdo atualizado do post."
+}

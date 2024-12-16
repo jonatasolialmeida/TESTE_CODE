@@ -1,11 +1,9 @@
-import uuid
 from django.db import models
 from django.contrib.auth.models import User
 
 
-class Post(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+class SocialPost(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="social_posts")
     title = models.CharField(max_length=255, default="Default Title")
     content = models.TextField()
     created_in = models.DateTimeField(auto_now_add=True)
@@ -17,15 +15,14 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    social_post = models.ForeignKey(SocialPost, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
     content = models.TextField()
     created_in = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"Comment by {self.author.username} in the post {self.post.id}"
+        return f"Comment by {self.author.username} in the post {self.social_post.id}"
 
     class Meta:
         verbose_name_plural = "Comments"
@@ -38,12 +35,11 @@ class Notification(models.Model):
         ("MENTIONED", "Mentioned User"),
     ]
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="notifications"
     )
-    post = models.ForeignKey(
-        Post,
+    social_post = models.ForeignKey(
+        SocialPost,
         on_delete=models.CASCADE,
         related_name="notifications",
         null=True,

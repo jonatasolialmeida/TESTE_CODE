@@ -1,47 +1,50 @@
 from django.contrib.auth.models import User
-from api.models import Post, Comment, Notification
+from api.models import SocialPost, Comment, Notification
 
-class PostService:
+
+class SocialPostService:
     @staticmethod
     def create_post(author, title, content):
-        return Post.objects.create(
+        return SocialPost.objects.create(
             author=author,
             title=title,
             content=content
         )
 
     @staticmethod
-    def update_post(post, title, new_content):
-        post.title = title
-        post.content = new_content
-        post.save()
-        return post
+    def update_post(social_post, title, new_content):
+        social_post.title = title
+        social_post.content = new_content
+        social_post.save()
+        return social_post
 
     @staticmethod
-    def delete_post(post):
-        post.is_active = False
-        post.save()
-        NotificationService.notify_post_removed(post)
+    def delete_social_post(social_post):
+        social_post.is_active = False
+        social_post.save()
+        NotificationService.notify_social_post_removed(social_post)
+
 
 class CommentService:
     @staticmethod
-    def create_comment(post, author, content):
+    def create_comment(social_post, author, content):
         comment = Comment.objects.create(
-            post=post,
+            social_post=social_post,
             author=author,
             content=content
         )
         NotificationService.create_comment_notifications(comment)
         return comment
 
+
 class NotificationService:
     @staticmethod
     def create_comment_notifications(comment):
-        # Notify the post's author
-        if comment.author != comment.post.author:
+        # Notify the social_post's author
+        if comment.author != comment.social_post.author:
             Notification.objects.create(
-                user=comment.post.author,
-                post=comment.post,
+                user=comment.social_post.author,
+                social_post=comment.social_post,
                 comment=comment,
                 notification_type='NEW_COMMENT',
                 content=f"{comment.author.username} commented on your post"
@@ -49,25 +52,25 @@ class NotificationService:
 
         # Notify other commenters
         commenters = Comment.objects.filter(
-            post=comment.post
+            social_post=comment.social_post
         ).exclude(
-            author__in=[comment.author, comment.post.author]
+            author__in=[comment.author, comment.social_post.author]
         ).values_list('author', flat=True).distinct()
 
         for user_id in commenters:
             user = User.objects.get(id=user_id)
             Notification.objects.create(
                 user=user,
-                post=comment.post,
+                social_post=comment.social_post,
                 comment=comment,
                 notification_type='NEW_COMMENT',
                 content=f"{comment.author.username} commented on the post you also commented on"
             )
 
     @staticmethod
-    def notify_post_removed(post):
+    def notify_social_post_removed(social_post):
         notifications = Notification.objects.filter(
-            post=post,
+            social_post=social_post,
             read=False
         )
 

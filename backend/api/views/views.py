@@ -18,6 +18,8 @@ from api.services.services import (
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.filter(is_active=True)
     serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

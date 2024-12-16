@@ -145,9 +145,4 @@ Content-Type: application/json
     "content": "Parabéns John."
 }
 
-### COMMENT SOCIAL_POST
-GET {{baseUrl}}/social-posts/1/comment/
-Authorization: {{tokenBeto}}
-Content-Type: application/json
-
 # =======================================
